@@ -103,7 +103,7 @@ class Enrollment(models.Model):
     # Other fields and methods you would like to design
 class Question(models.Model):
     #One-To-Many relationship with course
-    course = models.OneToManyField(Course)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     #Foreign key to lesson
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     #question text
