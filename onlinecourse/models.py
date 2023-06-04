@@ -111,6 +111,9 @@ class Question(models.Model):
     #question grade/mark
     question_mark = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f"Question : {self.content}"
+
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
@@ -135,6 +138,9 @@ class Choice(models.Model):
     choice_content = models.CharField(max_length=400)
     # Indicate if this choice of the question is a correct one or not
     choice_is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.choice_text
 
 
 # <HINT> The submission model
