@@ -112,7 +112,7 @@ class Question(models.Model):
     question_mark = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"Question : {self.content}"
+        return f"Question : {self.question_content}"
 
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
@@ -140,7 +140,7 @@ class Choice(models.Model):
     choice_is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.choice_text
+        return self.choice_content
 
 
 # <HINT> The submission model
@@ -150,3 +150,6 @@ class Choice(models.Model):
 class Submission(models.Model):
     enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
     choices = models.ManyToManyField(Choice)
+
+    def __str__(self):
+        return f"submission:{self.pk}"

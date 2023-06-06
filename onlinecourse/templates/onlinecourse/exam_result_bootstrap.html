@@ -39,17 +39,45 @@
     {% if grade > 80 %}
     <div class="alert alert-success">
        <!--HINT Display passed info -->
+       <p><b>Congratulations, {{ user.username }}!</b> You have passed the exam with score {{grade}} %</p>
     </div>
         {% else %}
         <div class="alert alert-danger">
             <!--HINT Display failed info -->
+            <p> <b>Failed</b> Sorry, {{ user.username}}! You have failed exam with score {{grade}} %</p>
         </div>
         <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
-        {% endif %}
-        <div class="card-columns-vertical mt-1">
-        <h5 class="">Exam results</h5>
-            <!--HINT Display exam results-->
+    {% endif %}
+    <div class="card-columns-vertical mt-1">
+    <h5 class="">Exam results</h5>
+        <!--HINT Display exam results-->
+
+        {%for question in course.question_set.all%}
+        <div class="card mt-1">
+            <h5 class="card-header">{{question.question_content }}</h5>
+            <div class="form-group">
+                {% for choice in question.choice_set.all %}
+                <div class="form-check">
+                    {% if choice.choice_is_correct and choice in choices %}
+                        <div class="text-success">Correct answer: {{ choice.choice_content }}</div>
+                    {%endif%}
+                    {% if choice.choice_is_correct and not choice in choices %}
+                        <div class="text-warning">Not selected: {{ choice.choice_content }}</div>
+                    {%endif%}
+                    {% if not choice.choice_is_correct and choice in choices %}
+                        <div class="text-danger">You got this wrong : {{ choice.choice_content }}</div>
+                    {%endif%}
+                    {% if not choice.choice_is_correct and choice not in choices %}
+                        <div >{{ choice.choice_content }}</div>
+                    {%endif%}
+                </div>
+                {%endfor%}
+            </div>
         </div>
+        {%endfor%}
     </div>
+        
+
+</div>
 </body>
 </html>
